@@ -7,7 +7,6 @@ public class BatteryBehav : MonoBehaviour
 {
     Rigidbody rb;
 
-
     enum BatteryState
     {
         onFloor,
@@ -33,9 +32,11 @@ public class BatteryBehav : MonoBehaviour
         previousState = currentState;
     }
 
-    public void SetBattery(int state)
+    public void SetBattery(int state, Transform newParent, Vector3 position)
     {
         currentState = (BatteryState)state;
+        SetBatteryParent(newParent);
+        SetBatteryPosition(position);
     }
 
 
@@ -51,24 +52,35 @@ public class BatteryBehav : MonoBehaviour
         }
         if (currentState == BatteryState.inStation)
         {
-            BatteryInSation();
+            BatteryInStation();
         }
     }
 
     void BatteryOnFloor()
     {
         SetBatteryParent(null);
+        rb.isKinematic = false;
         rb.useGravity = true;
+        transform.rotation = Quaternion.Euler(0,0,0);
+        transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+        
     }
 
     void BatteryInHand()
     {
+        
+        rb.isKinematic = true;      
         rb.useGravity = false;
+        transform.rotation = Quaternion.Euler(0, -45, 0);
+        transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
     }
 
-    void BatteryInSation()
+    void BatteryInStation()
     {
-
+        rb.isKinematic = true;
+        rb.useGravity = false;
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+        transform.localScale = new Vector3(0.8f, 0.4f, 0.8f);
     }
 
     public void SetBatteryParent(Transform newParent)
