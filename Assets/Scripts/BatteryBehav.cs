@@ -5,6 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody), typeof(BoxCollider))]
 public class BatteryBehav : MonoBehaviour
 {
+    public float maxEnergyLevel;
+    public float currentEnergyLevel;
+    public PowerOnBatteryLevel powerOnBatteryLevel;
+
     Rigidbody rb;
 
     enum BatteryState
@@ -18,6 +22,8 @@ public class BatteryBehav : MonoBehaviour
 
     private void Start()
     {
+        currentEnergyLevel = maxEnergyLevel;
+        powerOnBatteryLevel.SetMaxEnergy(maxEnergyLevel);
         currentState = BatteryState.onFloor;
         rb = GetComponent<Rigidbody>();
     }
@@ -28,7 +34,7 @@ public class BatteryBehav : MonoBehaviour
         {
             OnChangedState();
         }
-
+        powerOnBatteryLevel.SetEnergyOnDisplay(currentEnergyLevel);
         previousState = currentState;
     }
 

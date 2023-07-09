@@ -48,7 +48,7 @@ public class WithBatteryInteraction : MonoBehaviour
                     {
                         if (hit.transform.gameObject.CompareTag("Ground"))
                         {
-                            batteryInHand.GetComponent<BatteryBehav>().SetBattery(0, null, hit.point);
+                            batteryInHand.GetComponent<BatteryBehav>().SetBattery(0, null, hit.point + new Vector3(0,0.1f,0));
                             holdBattery = false;
 
                         }
