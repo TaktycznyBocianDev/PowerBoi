@@ -1695,6 +1695,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxEnergyLevel: 100
   currentEnergyLevel: 0
+  dropRate: 0.1
   powerOnBatteryLevel: {fileID: 896815901}
 --- !u!54 &1574026725
 Rigidbody:
