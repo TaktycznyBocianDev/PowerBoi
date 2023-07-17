@@ -6,10 +6,14 @@ public class PodestBehav : MonoBehaviour
 {
     public bool isCharger;
     public GameObject batteryPositionPodest;
-    
+    public GameObject stationFiller;
+    public GameObject currentBattery;
+    public Material materialIfOn, materialIfOff;
+
 
     public void TakeBattery(GameObject battery)
     {
+        stationFiller.GetComponentInChildren<Renderer>().sharedMaterial = materialIfOn;
         BatteryBehav currentBattery =  battery.GetComponent<BatteryBehav>();
 
         if (!isCharger) 
@@ -20,7 +24,11 @@ public class PodestBehav : MonoBehaviour
         {
             currentBattery.SetBattery(3, transform, batteryPositionPodest.transform.position);
         }
+      
+    }
 
-        
+    public void BatteryIsGone()
+    {
+        stationFiller.GetComponentInChildren<Renderer>().sharedMaterial = materialIfOff;
     }
 }

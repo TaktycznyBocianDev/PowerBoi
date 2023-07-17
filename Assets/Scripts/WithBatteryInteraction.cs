@@ -30,6 +30,7 @@ public class WithBatteryInteraction : MonoBehaviour
                     if (battery != null)
                     {
                         batteryInHand = hit.transform.gameObject;
+                        if (batteryInHand.GetComponentInParent<PodestBehav>() != null) batteryInHand.GetComponentInParent<PodestBehav>().BatteryIsGone();
                         battery.SetBattery(1, transform, batteryPositionPlayer.transform.position);
                         holdBattery = true;
                     }
@@ -60,4 +61,6 @@ public class WithBatteryInteraction : MonoBehaviour
         }
 
     }
+
+
 }
