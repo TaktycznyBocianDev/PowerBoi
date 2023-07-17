@@ -16,7 +16,8 @@ public class BatteryBehav : MonoBehaviour
     {
         onFloor,
         inHand,
-        inStation
+        inStation,
+        inChargerStation
     }
     BatteryState currentState;
     BatteryState previousState;
@@ -49,7 +50,7 @@ public class BatteryBehav : MonoBehaviour
 
     void OnChangedState()
     {
-        if(currentState == BatteryState.onFloor)
+        if (currentState == BatteryState.onFloor)
         {
             BatteryOnFloor();
         }
@@ -61,6 +62,10 @@ public class BatteryBehav : MonoBehaviour
         {
             BatteryInStation();
         }
+        if (currentState == BatteryState.inChargerStation)
+        {
+            BatteryInChargerStation();
+        }
     }
 
     void BatteryOnFloor()
@@ -69,15 +74,15 @@ public class BatteryBehav : MonoBehaviour
         SetBatteryParent(null);
         rb.isKinematic = false;
         rb.useGravity = true;
-        transform.rotation = Quaternion.Euler(0,0,0);
+        transform.rotation = Quaternion.Euler(0, 0, 0);
         transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-        
+
     }
 
     void BatteryInHand()
     {
         StopAllCoroutines();
-        rb.isKinematic = true;      
+        rb.isKinematic = true;
         rb.useGravity = false;
         transform.rotation = Quaternion.Euler(0, -45, 0);
         transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
@@ -92,6 +97,15 @@ public class BatteryBehav : MonoBehaviour
         StartCoroutine(DropEnergy());
     }
 
+    void BatteryInChargerStation()
+    {
+        rb.isKinematic = true;
+        rb.useGravity = false;
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+        transform.localScale = new Vector3(0.8f, 0.4f, 0.8f);
+        StartCoroutine(AddEnergy());
+    }
+
     public void SetBatteryParent(Transform newParent)
     {
         transform.SetParent(newParent);
@@ -104,7 +118,7 @@ public class BatteryBehav : MonoBehaviour
 
     public IEnumerator DropEnergy()
     {
-        while (currentEnergyLevel > 0 )
+        while (currentEnergyLevel > 0)
         {
             currentEnergyLevel--;
             powerOnBatteryLevel.SetEnergyOnDisplay(currentEnergyLevel);
@@ -116,7 +130,21 @@ public class BatteryBehav : MonoBehaviour
             Debug.Log("No more energy in this battery!");
             currentEnergyLevel = 0;
         }
+    }
 
-        
+    public IEnumerator AddEnergy()
+    {
+        while (currentEnergyLevel < maxEnergyLevel)
+        {
+            currentEnergyLevel++;
+            powerOnBatteryLevel.SetEnergyOnDisplay(currentEnergyLevel);
+            yield return new WaitForSeconds(dropRate);
+        }
+
+        if (currentEnergyLevel > 100)
+        {
+            Debug.Log("Max power!");
+            currentEnergyLevel = maxEnergyLevel;
+        }
     }
 }
