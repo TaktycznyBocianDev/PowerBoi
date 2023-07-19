@@ -4,12 +4,24 @@ using UnityEngine;
 
 public class PodestBehav : MonoBehaviour
 {
+    public BatteryMode batteryMode;
+    public float dropRate;
+    public float minTimeToEnergyDrop;
+    public float maxTimeToEnergyDrop;
+    public float cafeMakerDropRate;
+    [Space(15)]
     public bool isCharger;
     public GameObject batteryPositionPodest;
     public GameObject stationFiller;
     public GameObject currentBattery;
     public Material materialIfOn, materialIfOff;
+    public StationConfig config;
+    
 
+    private void Start()
+    {
+       config = new StationConfig(dropRate, minTimeToEnergyDrop, maxTimeToEnergyDrop, cafeMakerDropRate);
+    }
 
     public void TakeBattery(GameObject battery)
     {
@@ -30,5 +42,21 @@ public class PodestBehav : MonoBehaviour
     public void BatteryIsGone()
     {
         stationFiller.GetComponentInChildren<Renderer>().sharedMaterial = materialIfOff;
+    }
+}
+
+public class StationConfig
+{
+    public float dropRate;
+    public float minTimeToEnergyDrop;
+    public float maxTimeToEnergyDrop;
+    public float cafeMakerDropRate;
+
+    public StationConfig(float dropRate, float minTimeToEnergyDrop, float maxTimeToEnergyDrop, float cafeMakerDropRate)
+    {
+        this.dropRate = dropRate;
+        this.minTimeToEnergyDrop = minTimeToEnergyDrop;
+        this.maxTimeToEnergyDrop = maxTimeToEnergyDrop;
+        this.cafeMakerDropRate = cafeMakerDropRate;
     }
 }

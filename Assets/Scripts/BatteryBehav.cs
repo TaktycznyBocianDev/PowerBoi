@@ -22,6 +22,8 @@ public class BatteryBehav : MonoBehaviour
     BatteryState currentState;
     BatteryState previousState;
 
+    
+
     private void Start()
     {
         currentEnergyLevel = maxEnergyLevel;
@@ -94,7 +96,7 @@ public class BatteryBehav : MonoBehaviour
         rb.useGravity = false;
         transform.rotation = Quaternion.Euler(0, 0, 0);
         transform.localScale = new Vector3(0.8f, 0.4f, 0.8f);
-        StartCoroutine(DropEnergy());
+        StartCoroutine(DropEnergy(GetComponentInParent<PodestBehav>().batteryMode, GetComponentInParent<PodestBehav>().config));
     }
 
     void BatteryInChargerStation()
@@ -116,15 +118,32 @@ public class BatteryBehav : MonoBehaviour
         transform.position = position;
     }
 
-    public IEnumerator DropEnergy()
+    public IEnumerator DropEnergy(BatteryMode mode, StationConfig config)
     {
+ 
         while (currentEnergyLevel > 0)
         {
-            currentEnergyLevel--;
-            powerOnBatteryLevel.SetEnergyOnDisplay(currentEnergyLevel);
-            yield return new WaitForSeconds(dropRate);
-        }
+            switch (mode)
+            {
+                case BatteryMode.basic:
+                    currentEnergyLevel--;
+                    powerOnBatteryLevel.SetEnergyOnDisplay(currentEnergyLevel);
+                    yield return new WaitForSeconds(config.dropRate);
+                    break;
+                case BatteryMode.shootingStation:
+                    yield return new WaitForSeconds(Random.Range(config.minTimeToEnergyDrop, config.maxTimeToEnergyDrop));
+                    currentEnergyLevel = 0;
+                    powerOnBatteryLevel.SetEnergyOnDisplay(currentEnergyLevel);                   
+                    break;
+                case BatteryMode.caffeMakerStation:
+                    currentEnergyLevel -= 10;
+                    powerOnBatteryLevel.SetEnergyOnDisplay(currentEnergyLevel);
+                    yield return new WaitForSeconds(config.cafeMakerDropRate);
+                    break;
 
+            }
+            
+        }
         if (currentEnergyLevel < 0)
         {
             Debug.Log("No more energy in this battery!");
