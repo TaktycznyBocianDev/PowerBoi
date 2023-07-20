@@ -30,11 +30,11 @@ public class PodestBehav : MonoBehaviour
 
         if (!isCharger) 
         {
-            currentBattery.SetBattery(2, transform, batteryPositionPodest.transform.position);
+            currentBattery.SetBattery(2, transform, batteryPositionPodest.transform.position, batteryPositionPodest.transform.rotation);
         }
         else
         {
-            currentBattery.SetBattery(3, transform, batteryPositionPodest.transform.position);
+            currentBattery.SetBattery(3, transform, batteryPositionPodest.transform.position, batteryPositionPodest.transform.rotation);
         }
       
     }

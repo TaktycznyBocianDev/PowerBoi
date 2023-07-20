@@ -31,7 +31,7 @@ public class WithBatteryInteraction : MonoBehaviour
                     {
                         batteryInHand = hit.transform.gameObject;
                         if (batteryInHand.GetComponentInParent<PodestBehav>() != null) batteryInHand.GetComponentInParent<PodestBehav>().BatteryIsGone();
-                        battery.SetBattery(1, transform, batteryPositionPlayer.transform.position);
+                        battery.SetBattery(1, transform, batteryPositionPlayer.transform.position, batteryPositionPlayer.transform.rotation);
                         holdBattery = true;
                     }
                 }
@@ -49,7 +49,8 @@ public class WithBatteryInteraction : MonoBehaviour
                     {
                         if (hit.transform.gameObject.CompareTag("Ground"))
                         {
-                            batteryInHand.GetComponent<BatteryBehav>().SetBattery(0, null, hit.point + new Vector3(0,0.1f,0));
+                            batteryInHand.GetComponent<BatteryBehav>().SetBattery(0, null, hit.point + new Vector3(0, 0.1f, 0), Quaternion.LookRotation(transform.position - hit.transform.position));
+                            batteryInHand.GetComponent<BatteryBehav>().SetBatteryToPlayer(gameObject);
                             holdBattery = false;
 
                         }

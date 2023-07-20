@@ -42,11 +42,12 @@ public class BatteryBehav : MonoBehaviour
         previousState = currentState;
     }
 
-    public void SetBattery(int state, Transform newParent, Vector3 position)
+    public void SetBattery(int state, Transform newParent, Vector3 position, Quaternion rotation)
     {
         currentState = (BatteryState)state;
         SetBatteryParent(newParent);
         SetBatteryPosition(position);
+        SetBatteryRotation(rotation);
     }
 
 
@@ -76,7 +77,6 @@ public class BatteryBehav : MonoBehaviour
         SetBatteryParent(null);
         rb.isKinematic = false;
         rb.useGravity = true;
-        transform.rotation = Quaternion.Euler(0, 0, 0);
         transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
 
     }
@@ -86,7 +86,6 @@ public class BatteryBehav : MonoBehaviour
         StopAllCoroutines();
         rb.isKinematic = true;
         rb.useGravity = false;
-        transform.rotation = Quaternion.Euler(0, -45, 0);
         transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
     }
 
@@ -94,7 +93,6 @@ public class BatteryBehav : MonoBehaviour
     {
         rb.isKinematic = true;
         rb.useGravity = false;
-        transform.rotation = Quaternion.Euler(0, 0, 0);
         transform.localScale = new Vector3(0.8f, 0.4f, 0.8f);
         StartCoroutine(DropEnergy(GetComponentInParent<PodestBehav>().batteryMode, GetComponentInParent<PodestBehav>().config));
     }
@@ -103,7 +101,6 @@ public class BatteryBehav : MonoBehaviour
     {
         rb.isKinematic = true;
         rb.useGravity = false;
-        transform.rotation = Quaternion.Euler(0, 0, 0);
         transform.localScale = new Vector3(0.8f, 0.4f, 0.8f);
         StartCoroutine(AddEnergy());
     }
@@ -116,6 +113,17 @@ public class BatteryBehav : MonoBehaviour
     public void SetBatteryPosition(Vector3 position)
     {
         transform.position = position;
+    }
+
+    public void SetBatteryRotation(Quaternion rotation)
+    {
+        transform.rotation =  rotation;
+    }
+
+    public void SetBatteryToPlayer(GameObject Player)
+    {
+        transform.LookAt(Player.transform.position);
+        transform.Rotate(0, 90, 0);
     }
 
     public IEnumerator DropEnergy(BatteryMode mode, StationConfig config)
