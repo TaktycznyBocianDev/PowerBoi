@@ -136,24 +136,31 @@ public class BatteryBehav : MonoBehaviour
                 case BatteryMode.basic:
                     currentEnergyLevel--;
                     powerOnBatteryLevel.SetEnergyOnDisplay(currentEnergyLevel);
+                    config.stationDisplay.SetMaxEnergy(maxEnergyLevel);
+                    config.stationDisplay.SetEnergyOnDisplay(currentEnergyLevel);
                     yield return new WaitForSeconds(config.dropRate);
                     break;
                 case BatteryMode.shootingStation:
                     yield return new WaitForSeconds(Random.Range(config.minTimeToEnergyDrop, config.maxTimeToEnergyDrop));
                     currentEnergyLevel = 0;
-                    powerOnBatteryLevel.SetEnergyOnDisplay(currentEnergyLevel);                   
+                    config.stationDisplay.SetMaxEnergy(maxEnergyLevel);
+                    powerOnBatteryLevel.SetEnergyOnDisplay(currentEnergyLevel);
+                    config.stationDisplay.SetEnergyOnDisplay(currentEnergyLevel);
                     break;
                 case BatteryMode.caffeMakerStation:
                     currentEnergyLevel -= 10;
+                    config.stationDisplay.SetMaxEnergy(maxEnergyLevel);
                     powerOnBatteryLevel.SetEnergyOnDisplay(currentEnergyLevel);
+                    config.stationDisplay.SetEnergyOnDisplay(currentEnergyLevel);
                     yield return new WaitForSeconds(config.cafeMakerDropRate);
                     break;
 
             }
             
         }
-        if (currentEnergyLevel < 0)
+        if (currentEnergyLevel <= 0)
         {
+            config.BateryLevelEvent();
             Debug.Log("No more energy in this battery!");
             currentEnergyLevel = 0;
         }
