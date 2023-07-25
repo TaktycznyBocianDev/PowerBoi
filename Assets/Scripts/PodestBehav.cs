@@ -11,68 +11,30 @@ public class PodestBehav : MonoBehaviour
     public string StationName;
     [Space(15)]
     public BatteryMode batteryMode;
-    public float dropRate;
+    public float timeRate;
     public float minTimeToEnergyDrop;
     public float maxTimeToEnergyDrop;
     public float cafeMakerDropRate;
     [Space(15)]
-    public bool isCharger;
     public GameObject batteryPositionPodest;
-    public GameObject stationFiller;
-    public GameObject currentBattery;
-    public Material materialIfOn, materialIfOff;
     public StationConfig config;
-    [Space(15)]
-    public PowerOnBatteryLevel stationDisplay;
-    public Image displayImage;
-    public TMP_Text textMeshPro;
-    private Color startingDisplayColor;
 
-    private void OnEnable()
+
+    public virtual void OnEnable()
     {
-        startingDisplayColor = displayImage.color;
-        textMeshPro.text = StationName;
-        SetDispay(Color.red);
-        config = new StationConfig(dropRate, minTimeToEnergyDrop, maxTimeToEnergyDrop, cafeMakerDropRate, stationDisplay);
+        config = new StationConfig(timeRate);
         config.batteryLevelDrop += BatteryIsGone;
     }
 
-    private void OnDisable()
+    public virtual void OnDisable()
     {
         config.batteryLevelDrop -= BatteryIsGone;
     }
 
-    public void TakeBattery(GameObject battery)
-    {
-        stationFiller.GetComponentInChildren<Renderer>().sharedMaterial = materialIfOn;
-        BatteryBehav currentBattery = battery.GetComponent<BatteryBehav>();
-        SetDispay(startingDisplayColor);
+    public virtual void TakeBattery(GameObject battery) { }
 
-        if (!isCharger)
-        {
-            currentBattery.SetBattery(2, transform, batteryPositionPodest.transform.position, batteryPositionPodest.transform.rotation);
-        }
-        else
-        {
-            currentBattery.SetBattery(3, transform, batteryPositionPodest.transform.position, batteryPositionPodest.transform.rotation);
-        }
+    public virtual void BatteryIsGone() { }
 
-    }
-
-    public void BatteryIsGone()
-    {
-        stationFiller.GetComponentInChildren<Renderer>().sharedMaterial = materialIfOff;
-
-        //Set display to red and start the alarm
-        SetDispay(Color.red);
-
-    }
-
-    private void SetDispay(Color color)
-    {
-        displayImage.color = color;
-        stationDisplay.SetEnergyOnDisplay(0f);
-    }
 }
 
 public class StationConfig
@@ -94,6 +56,11 @@ public class StationConfig
         this.maxTimeToEnergyDrop = maxTimeToEnergyDrop;
         this.cafeMakerDropRate = cafeMakerDropRate;
         this.stationDisplay = stationDisplay;
+    }
+
+    public StationConfig(float dropRate)
+    {
+        this.dropRate = dropRate;
     }
 
     public void BateryLevelEvent()

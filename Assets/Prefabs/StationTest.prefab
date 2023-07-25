@@ -624,7 +624,7 @@ GameObject:
   - component: {fileID: 6707779682890873753}
   - component: {fileID: 6707779682890873752}
   - component: {fileID: 6707779682890873759}
-  - component: {fileID: 6707779682890873755}
+  - component: {fileID: 424767822001887177}
   m_Layer: 0
   m_Name: Podest
   m_TagString: Untagged
@@ -711,7 +711,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6707779682890873755
+--- !u!114 &424767822001887177
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -720,21 +720,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 6707779682890873758}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c25f406c233e914aa71b6668552f0ac, type: 3}
+  m_Script: {fileID: 11500000, guid: a0749136971265c4fa8cc1afa172836f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StationName: Basic Station
+  StationName: Test Station
   batteryMode: 0
-  dropRate: 0
+  timeRate: 0.5
   minTimeToEnergyDrop: 0
   maxTimeToEnergyDrop: 0
-  cafeMakerDropRate: 1
-  isCharger: 0
+  cafeMakerDropRate: 0
   batteryPositionPodest: {fileID: 6707779684697454274}
   stationFiller: {fileID: 3633259680906450948}
-  currentBattery: {fileID: 0}
-  materialIfOn: {fileID: 2100000, guid: fee162d59fc27384da1d8d82cc5618ea, type: 2}
-  materialIfOff: {fileID: 2100000, guid: a540682ef6898c84b8f23298e7dd7b69, type: 2}
+  materialIfOn: {fileID: 2100000, guid: 9f4e49b0b40c70b4389379936473bd3c, type: 2}
+  materialIfOff: {fileID: 2100000, guid: c6922b67ffc787d4d9f5e3b719173988, type: 2}
   stationDisplay: {fileID: 8501780210042765796}
   displayImage: {fileID: 3126233004915307464}
   textMeshPro: {fileID: 1101473849426866248}
