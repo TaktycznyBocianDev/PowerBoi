@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody), typeof(BoxCollider))]
 public class BatteryBehav : MonoBehaviour
 {
+    public bool defaultEnergyLevel;
     public float maxEnergyLevel;
     public float currentEnergyLevel;
     public float dropRate;
@@ -26,7 +27,7 @@ public class BatteryBehav : MonoBehaviour
 
     private void Start()
     {
-        currentEnergyLevel = maxEnergyLevel;
+        if (defaultEnergyLevel) currentEnergyLevel = maxEnergyLevel;
         powerOnBatteryLevel.SetMaxEnergy(maxEnergyLevel);
         currentState = BatteryState.onFloor;
         rb = GetComponent<Rigidbody>();
@@ -142,10 +143,11 @@ public class BatteryBehav : MonoBehaviour
                     break;
                 case BatteryMode.shootingStation:
                     yield return new WaitForSeconds(Random.Range(config.minTimeToEnergyDrop, config.maxTimeToEnergyDrop));
-                    currentEnergyLevel = 0;
+                    //currentEnergyLevel = 0;
                     config.stationDisplay.SetMaxEnergy(maxEnergyLevel);
                     powerOnBatteryLevel.SetEnergyOnDisplay(currentEnergyLevel);
                     config.stationDisplay.SetEnergyOnDisplay(currentEnergyLevel);
+                    currentEnergyLevel = 0;
                     break;
                 case BatteryMode.caffeMakerStation:
                     currentEnergyLevel -= 10;
