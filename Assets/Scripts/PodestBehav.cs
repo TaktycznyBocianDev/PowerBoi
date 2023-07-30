@@ -46,8 +46,20 @@ public class StationConfig
     public float maxTimeToEnergyDrop;
     public float cafeMakerDropRate;
 
+    public ShootingConfig shootingConfig;
+
     public delegate void BateryLevelDropToZero();
     public event BateryLevelDropToZero batteryLevelDrop;
+
+    public StationConfig(float dropRate, float minTimeToEnergyDrop, float maxTimeToEnergyDrop, float cafeMakerDropRate, ShootingConfig shootingConfig)
+    {
+        this.dropRate = dropRate;
+        this.minTimeToEnergyDrop = minTimeToEnergyDrop;
+        this.maxTimeToEnergyDrop = maxTimeToEnergyDrop;
+        this.cafeMakerDropRate = cafeMakerDropRate;
+        this.shootingConfig = shootingConfig;
+
+    }
 
     public StationConfig(float dropRate, float minTimeToEnergyDrop, float maxTimeToEnergyDrop, float cafeMakerDropRate, PowerOnBatteryLevel stationDisplay)
     {

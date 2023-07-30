@@ -144,9 +144,10 @@ public class BatteryBehav : MonoBehaviour
                 case BatteryMode.shootingStation:
                     yield return new WaitForSeconds(Random.Range(config.minTimeToEnergyDrop, config.maxTimeToEnergyDrop));
                     //currentEnergyLevel = 0;
-                    config.stationDisplay.SetMaxEnergy(maxEnergyLevel);
+                    //config.stationDisplay.SetMaxEnergy(maxEnergyLevel);
                     powerOnBatteryLevel.SetEnergyOnDisplay(currentEnergyLevel);
-                    config.stationDisplay.SetEnergyOnDisplay(currentEnergyLevel);
+                    //config.stationDisplay.SetEnergyOnDisplay(currentEnergyLevel);
+                    config.shootingConfig.SetDispay(true);
                     currentEnergyLevel = 0;
                     break;
                 case BatteryMode.caffeMakerStation:
